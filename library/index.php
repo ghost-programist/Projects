@@ -43,6 +43,7 @@ $books = $_SESSION["books"];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Store</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <form method="POST">
@@ -70,8 +71,9 @@ $books = $_SESSION["books"];
 
 
 </form>
-<?php
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+<?php if ($_SERVER["REQUEST_METHOD"] === "POST"): ?>
+        
+        <?php
         $title_book = $_POST["book"];
         $action = $_POST["action"];
         $selectedBook = null;
@@ -81,7 +83,11 @@ $books = $_SESSION["books"];
                 $selectedBook = $book;
                 break;
             }
-            }
+        }
+            if ($selectedBook === null) {
+                echo "Книга не найдена!";
+            } else {
+            
            if ($action === "take") {
 
             if ($selectedBook->isAvailable) {
@@ -109,9 +115,11 @@ $books = $_SESSION["books"];
             $selectedBook->opis();
 
         }
-        
         }
+        ?>
+        </div>
+        <?php endif; ?>
     
-?>
+
 </body>
 </html>
