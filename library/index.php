@@ -23,13 +23,15 @@ $customer = new Customer(
 );
 
 //создание книг
+
+
 if(!isset(($_SESSION["books"]))){
     $_SESSION["books"] = [
-        new Book("Rozdroże kruków", "Andrzej Sapkowski", 2024, 40),
-        new Book("Atomowe nawyki", "James Clear", 2019, 29),
-        new Book("Teoria. Pozwól im", "Mel Robbins", 2024, 33),
-        new Book("Schroniskowe łamigłówki", "Sławek Gortych", 2020, 37),
-        new Book("Bezprawie", "Remigiusz Mróz", 1974, 20)
+        new Book("Rozdroże kruków", "Andrzej Sapkowski", 2024, 40, 1),
+        new Book("Atomowe nawyki", "James Clear", 2019, 29, 4),
+        new Book("Teoria. Pozwól im", "Mel Robbins", 2024, 33, 5),
+        new Book("Schroniskowe łamigłówki", "Sławek Gortych", 2020, 37, 10),
+        new Book("Bezprawie", "Remigiusz Mróz", 1974, 20, 8)
     ];
 
 }
@@ -95,22 +97,22 @@ $books = $_SESSION["books"];
             
            if ($action === "take") {
 
-            if ($selectedBook->isAvailable) {
-                $selectedBook->isAvailable = false;
+            if ($selectedBook->quantity > 0) {
+                $selectedBook->quantity -= 1;
                 echo "Вы взяли книгу {$selectedBook->title}";
             }else {
-                echo "Книга уже недоступна!";
+                echo "Нет свободных экземпляров";
             }
 
             } 
         
         elseif ($action === "return") {
 
-            if (!$selectedBook->isAvailable) {
-                $selectedBook->isAvailable = true;
+            if ($selectedBook->quantity < $selectedBook->maxQuantity) {
+                $selectedBook->quantity++;
                 echo "Вы вернули книгу {$selectedBook->title}";
             } else {
-                echo "Книга уже находится в библиотеке!";
+                echo "У вас нет экземпляров этой книги";
             }
 
         } 

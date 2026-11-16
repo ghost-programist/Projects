@@ -1,14 +1,20 @@
 <?php
 
 class Book{
+
+    public int $maxQuantity;
+
     public function __construct(
         public string $title,
         private string $autor,
         private int $year,
         private int $price,
-        public bool $isAvailable = true
+        public int $quantity
         
-    ){}
+        
+    ){
+         $this->maxQuantity = $quantity;
+    }
 
 
     public function opis(): void {
