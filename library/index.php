@@ -8,7 +8,7 @@ require_once "classes/payMethod.php";
 session_start();
 
 
-
+//создание пользователей
 $admin = new Admin(
     "Alex",
     "admin@mail.com",
@@ -22,6 +22,7 @@ $customer = new Customer(
     "Warsaw"
 );
 
+//создание книг
 if(!isset(($_SESSION["books"]))){
     $_SESSION["books"] = [
         new Book("Rozdroże kruków", "Andrzej Sapkowski", 2024, 40),
@@ -46,6 +47,8 @@ $books = $_SESSION["books"];
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
+
+<!-- форма выбора книги -->
     <form method="POST">
 
     <label for="selectBook">Выбери книгу</label><br>
@@ -71,7 +74,7 @@ $books = $_SESSION["books"];
 
 
 </form>
-<?php if ($_SERVER["REQUEST_METHOD"] === "POST"): ?>
+<?php if ( isset($_POST["book"], $_POST["action"]) && $_SERVER["REQUEST_METHOD"] === "POST"): ?>
         
         <?php
         $title_book = $_POST["book"];
@@ -84,9 +87,11 @@ $books = $_SESSION["books"];
                 break;
             }
         }
+        //выбор действия и действие
             if ($selectedBook === null) {
                 echo "Книга не найдена!";
             } else {
+            
             
            if ($action === "take") {
 
@@ -114,6 +119,9 @@ $books = $_SESSION["books"];
 
             $selectedBook->opis();
 
+        }
+        else {
+            echo "Неизвестное действие!";
         }
         }
         ?>
